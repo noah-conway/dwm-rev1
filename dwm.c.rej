@@ -1,9 +1,0 @@
-diff a/dwm.c b/dwm.c	(rejected hunks)
-@@ -92,6 +92,7 @@ struct Client {
- 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
- 	int bw, oldbw;
- 	unsigned int tags;
-+	unsigned int switchtotag;
- 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
- 	Client *next;
- 	Client *snext;
