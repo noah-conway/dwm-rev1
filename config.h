@@ -6,12 +6,12 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const int startwithgaps	    = 1;	 /* 1 means gaps are used by default */
-static const unsigned int gappx     = 10;       /* default gap between windows in pixels */
+static const unsigned int gappx     = 8;       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 0;        /* vertical padding for statusbar */
+static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 12;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "Symbols Nerd Font Mono:size=11:style=Regular", "Roboto Mono:size=11:style=Italic"};
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
@@ -51,7 +51,7 @@ static const Rule rules[] = {
 	 */
 	/* class        instance    title       tags mask     switchtotag    isfloating   monitor */
 	{ "Gimp",	      NULL,			  NULL,		    0,            0,				     1,			      -1 },
-	{ "firefox",      NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
+	{ "firefox",    NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
 	{ NULL,		      "spterm",		NULL,		    SPTAG(0),		  0,             1,			      -1 },
 	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
 	//{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
@@ -60,7 +60,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static int attachbelow = 1;    /* 1 means attach after the currently active window */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
@@ -94,7 +94,7 @@ static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
 static const char *btcmd[] = { "dmenu-bluetooth", NULL};
 static const char *mailcmd[] = { "thunderbird", NULL};
 static const char *scrotcmd[] = { "flameshot", "gui", NULL};
-static const char *powercmd[] = { "powermenu.sh", NULL};
+static const char *powercmd[] = { "/home/noah/.local/bin/dmenu/powermenu.sh", NULL};
 
 static const char *mpdtogglecmd[] = { "mpc", "toggle", NULL};
 static const char *mpdnextcmd[] = { "mpc", "next", NULL};
@@ -167,7 +167,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_w,                      4)
 	TAGKEYS(                        XK_e,                      5)
 	TAGKEYS(                        XK_g,                      6)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      spawn,          {.v = powercmd } },
 };
 
 /* button definitions */
