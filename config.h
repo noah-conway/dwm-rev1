@@ -1,15 +1,17 @@
 /* See LICENSE file for copyright and license details. */
 
+static const char term              = "st";
+static const char browser           = "firefox";
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const int startwithgaps	     = 0;	 /* 1 means gaps are used by default */
+static const int startwithgaps	    = 1;	 /* 1 means gaps are used by default */
 static const unsigned int gappx     = 10;       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 0;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "Symbols Nerd Font Mono:size=11:style=Regular", "Roberto Mono:size=11:style=Italic"};
+static const char *fonts[]          = { "Symbols Nerd Font Mono:size=11:style=Regular", "Roboto Mono:size=11:style=Italic"};
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -26,8 +28,8 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+const char *spcmd1[] = {term, "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {term, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -46,12 +48,12 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     switchtotag    isfloating   monitor */
-	{ "Gimp",	  NULL,			NULL,		0,				1,			 -1 },
-	{ "Firefox",  NULL,			NULL,		1 << 8,			0,			 -1 },
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
-	{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
+	/* class        instance    title       tags mask     switchtotag    isfloating   monitor */
+	{ "Gimp",	      NULL,			  NULL,		    0,            0,				     1,			      -1 },
+	{ browser,      NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
+	//{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
+	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
+	//{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
 };
 
 /* layout(s) */
@@ -85,7 +87,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { term, NULL };
 static const char *browsercmd[] = { "firefox", NULL};
 static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
 static const char *btcmd[] = { "dmenu-bluetooth", NULL};
@@ -102,10 +104,10 @@ static const char *volmutecmd[] = { "pamixer", "--toggle-mute", NULL};
 static const char *audioswtchcmd[] = { "audioswitch.sh", NULL};
 
 static const Arg tagexec[] = {
+	{ .v = NULL },
 	{ .v = termcmd },
 	{ .v = termcmd },
-	{ .v = termcmd },
-	{ .v = termcmd },
+	{ .v = browsercmd },
 	{ .v = termcmd },
 	{ .v = termcmd },
 	{ .v = termcmd },
@@ -116,17 +118,17 @@ static const Arg tagexec[] = {
 static const Key keys[] = {
   /* ### LAUNCH PROGRAMS ### */
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_u,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
   /* ### MEDIA KEYS ### */
 	/* modifier                     key        function        argument */
-  { 0,                            XF86XK_AudioPlay,             spawn,          {.v = mpdtogglecmd } },
-	{ 0,                            XF86XK_AudioNext,             spawn,          {.v = mpdnextcmd } },
-	{ 0,                            XF86XK_AudioPrev,             spawn,          {.v = mpdprevcmd } },
-	{ 0,                            XF86XK_AudioRaiseVolume,      spawn,          {.v = volraisecmd } },
-	{ 0,                            XF86XK_AudioLowerVolume,      spawn,          {.v = vollowercmd } },
-	{ 0,                            XF86XK_AudioMute,             spawn,          {.v = volmutecmd } },
+//  { 0,                            XF86XK_AudioPlay,             spawn,          {.v = mpdtogglecmd } },
+//	{ 0,                            XF86XK_AudioNext,             spawn,          {.v = mpdnextcmd } },
+//	{ 0,                            XF86XK_AudioPrev,             spawn,          {.v = mpdprevcmd } },
+//	{ 0,                            XF86XK_AudioRaiseVolume,      spawn,          {.v = volraisecmd } },
+//	{ 0,                            XF86XK_AudioLowerVolume,      spawn,          {.v = vollowercmd } },
+//	{ 0,                            XF86XK_AudioMute,             spawn,          {.v = volmutecmd } },
   /* ### WM Keys ### */
 	/* modifier                     key        function        argument */
 	//{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -153,10 +155,10 @@ static const Key keys[] = {
 	{ MODKEY,            			      XK_y,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			      XK_p,	     togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			      XK_o,	     togglescratch,  {.ui = 2 } },
-	{ MODKEY,                       XK_lefbracket,  setgaps,        {.i = -5 } },
-	{ MODKEY,                       XK_rightbracket,  setgaps,        {.i = +5 } },
-	{ MODKEY|ShiftMask,             XK_leftbracket,  setgaps,        {.i = GAP_RESET } },
-	{ MODKEY|ShiftMask,             XK_rightbracket,  setgaps,        {.i = GAP_TOGGLE} },
+//	{ MODKEY,                       XK_lefbracket,  setgaps,        {.i = -5 } },
+//	{ MODKEY,                       XK_rightbracket,  setgaps,        {.i = +5 } },
+//	{ MODKEY|ShiftMask,             XK_leftbracket,  setgaps,        {.i = GAP_RESET } },
+//	{ MODKEY|ShiftMask,             XK_rightbracket,  setgaps,        {.i = GAP_TOGGLE} },
 	TAGKEYS(                        XK_a,                      0)
 	TAGKEYS(                        XK_s,                      1)
 	TAGKEYS(                        XK_d,                      2)
