@@ -3,12 +3,12 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const int startwithgaps	     = 0;	 /* 1 means gaps are used by default */
-static const unsigned int gappx     = 10;       /* default gap between windows in pixels */
+static const unsigned int gappx     = 8;       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 2;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 0;        /* vertical padding for statusbar */
+static const int vertpadbar         = 8;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
@@ -26,8 +26,11 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+/* Define applications */
+static const char term              = "st";
+static const char browser           = "firefox";
+
+const char *spcmd1[] = {term, "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -37,7 +40,8 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "a", "s", "d", "f", "w", "e", "g"};
+static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6", "7"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -45,11 +49,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     switchtotag    isfloating   monitor */
-	{ "Gimp",	  NULL,			NULL,		0,				1,			 -1 },
-	{ "Firefox",  NULL,			NULL,		1 << 8,			0,			 -1 },
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
-	{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
+	{ "Gimp",	    NULL,			  NULL,		    0,    				0,             1,			      -1 },
+	{ browser,    NULL,			  NULL,		    1 << 3,			  1,			       0,           -1 },
+	{ NULL,		  "spterm",		  NULL,		    SPTAG(0),		  0,             1,			      -1 },
+	{ NULL,		  "spfm",		    NULL,		    SPTAG(1),		  0,			       1,           -1 },
+	{ NULL,		  "keepassxc",	NULL,		    SPTAG(2),		  0,			       1,           -1 },
 };
 
 /* layout(s) */
@@ -70,8 +74,8 @@ static const Layout layouts[] = {
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      tag,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      toggleview,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -84,6 +88,16 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *browsercmd[] = { "firefox", NULL};
+static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
+
+static const char *mpdnextcmd[] = { "mpc", "next", NULL};
+static const char *mpdprevcmd[] = { "mpc", "prev", NULL};
+static const char *volraisecmd[] = { "pamixer", "-i", "10", NULL};
+static const char *vollowercmd[] = { "pamixer", "-d", "10", NULL};
+static const char *volmutecmd[] = { "pamixer", "--toggle-mute", NULL};
+static const char *audioswtchcmd[] = { "audioswitch.sh", NULL};
+static const char *mpdtogglecmd[] = { "mpc", "toggle", NULL};
 
 static const Arg tagexec[] = {
 	{ .v = termcmd },
