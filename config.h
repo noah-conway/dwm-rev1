@@ -1,7 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
-static const char term              = "st";
-static const char browser           = "firefox";
+/* applications */
+//static const char *term              = "st";
+//static const char *browser           = "firefox";
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const int startwithgaps	    = 1;	 /* 1 means gaps are used by default */
@@ -28,8 +29,8 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {term, "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {term, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
 const char *spcmd3[] = {"keepassxc", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -50,8 +51,8 @@ static const Rule rules[] = {
 	 */
 	/* class        instance    title       tags mask     switchtotag    isfloating   monitor */
 	{ "Gimp",	      NULL,			  NULL,		    0,            0,				     1,			      -1 },
-	{ browser,      NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
-	//{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
+	{ "firefox",      NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
+	{ NULL,		      "spterm",		NULL,		    SPTAG(0),		  0,             1,			      -1 },
 	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
 	//{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
 };
@@ -87,7 +88,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { term, NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL};
 static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
 static const char *btcmd[] = { "dmenu-bluetooth", NULL};
@@ -119,9 +120,12 @@ static const Key keys[] = {
   /* ### LAUNCH PROGRAMS ### */
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_u,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
-  /* ### MEDIA KEYS ### */
+  { MODKEY,                     	XK_Return, togglescratch,  {.ui = 0 } },
+	{ MODKEY,            			      XK_p,	     togglescratch,  {.ui = 1 } },
+	{ MODKEY,            			      XK_o,	     togglescratch,  {.ui = 2 } },
+/* ### MEDIA KEYS ### */
 	/* modifier                     key        function        argument */
 //  { 0,                            XF86XK_AudioPlay,             spawn,          {.v = mpdtogglecmd } },
 //	{ 0,                            XF86XK_AudioNext,             spawn,          {.v = mpdnextcmd } },
@@ -152,10 +156,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,            			      XK_y,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			      XK_p,	     togglescratch,  {.ui = 1 } },
-	{ MODKEY,            			      XK_o,	     togglescratch,  {.ui = 2 } },
-//	{ MODKEY,                       XK_lefbracket,  setgaps,        {.i = -5 } },
+	//	{ MODKEY,                       XK_lefbracket,  setgaps,        {.i = -5 } },
 //	{ MODKEY,                       XK_rightbracket,  setgaps,        {.i = +5 } },
 //	{ MODKEY|ShiftMask,             XK_leftbracket,  setgaps,        {.i = GAP_RESET } },
 //	{ MODKEY|ShiftMask,             XK_rightbracket,  setgaps,        {.i = GAP_TOGGLE} },
