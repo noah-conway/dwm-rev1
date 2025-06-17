@@ -10,6 +10,8 @@ static const unsigned int gappx     = 8;       /* default gap between windows in
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int splitstatus        = 1;        /* 1 for split status items */
+static const char *splitdelim        = ";";       /* Character used for separating status */
 static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 12;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "Symbols Nerd Font Mono:size=11:style=Regular", "Roboto Mono:size=11:style=Italic"};
