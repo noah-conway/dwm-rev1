@@ -53,6 +53,7 @@ static const Rule rules[] = {
 	 */
 	/* class        instance    title       tags mask     switchtotag    isfloating   monitor */
 	{ "Gimp",	      NULL,			  NULL,		    0,            0,				     1,			      -1 },
+	{ "REAPER",     NULL,       NULL,       1,            1,             0,           -1 },
 	{ "firefox",    NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
 	{ NULL,		      "spterm",		NULL,		    SPTAG(0),		  0,             1,			      -1 },
 	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
@@ -77,8 +78,8 @@ static const Layout layouts[] = {
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -93,6 +94,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL};
 static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
+static const char *dawcmd[] = { "reaper", "PIPEWIRE_LATENCY=128/48000", NULL };
 static const char *btcmd[] = { "dmenu-bluetooth", NULL};
 static const char *mailcmd[] = { "thunderbird", NULL};
 static const char *scrotcmd[] = { "flameshot", "gui", NULL};
@@ -107,7 +109,7 @@ static const char *volmutecmd[] = { "pamixer", "--toggle-mute", NULL};
 static const char *audioswtchcmd[] = { "audioswitch.sh", NULL};
 
 static const Arg tagexec[] = {
-	{ .v = NULL },
+	{ .v = dawcmd},
 	{ .v = termcmd },
 	{ .v = termcmd },
 	{ .v = browsercmd },
