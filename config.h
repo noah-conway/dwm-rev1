@@ -55,6 +55,7 @@ static const Rule rules[] = {
 	{ "Gimp",	      NULL,			  NULL,		    0,            0,				     1,			      -1 },
 	{ "REAPER",     NULL,       NULL,       1,            1,             0,           -1 },
 	{ "firefox",    NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
+	{ NULL,		      "floatst",		NULL,		  0,		        0,             1,			      -1 },
 	{ NULL,		      "spterm",		NULL,		    SPTAG(0),		  0,             1,			      -1 },
 	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
 	//{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
@@ -95,10 +96,10 @@ static const char *termcmd[]  = { "st", NULL };
 static const char *browsercmd[] = { "firefox", NULL};
 static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
 static const char *dawcmd[] = { "reaper", "PIPEWIRE_LATENCY=128/48000", NULL };
-static const char *btcmd[] = { "dmenu-bluetooth", NULL};
-static const char *mailcmd[] = { "thunderbird", NULL};
 static const char *scrotcmd[] = { "flameshot", "gui", NULL};
-static const char *powercmd[] = { "/home/noah/.local/bin/dmenu/powermenu.sh", NULL};
+static const char *powercmd[] = { "dmenu-power", NULL};
+static const char *clipcmd[] = { "clipmenu", NULL};
+
 
 static const char *mpdtogglecmd[] = { "mpc", "toggle", NULL};
 static const char *mpdnextcmd[] = { "mpc", "next", NULL};
