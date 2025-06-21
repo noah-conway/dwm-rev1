@@ -32,12 +32,12 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
+const char *spcmd2[] = {"st", "-n", "spnotes", "-g", "144x41", "-e", "zk", "edit", "--interactive", NULL };
 const char *spcmd3[] = {"st", "-n", "spmp", "-g", "144x41", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
-	{"spranger",    spcmd2},
+	{"spnotes",    spcmd2},
 	{"spmp",        spcmd3},
 };
 
@@ -56,8 +56,10 @@ static const Rule rules[] = {
 	{ "REAPER",     NULL,       NULL,       1,            1,             0,           -1 },
 	{ "firefox",    NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
 	{ "Anki",       NULL,		  	"Add",		  0,    			  0,             1,			      -1 },
+	{ NULL,		      "note",   	NULL,		    0,		        0,             1,			      -1 },
 	{ NULL,		      "floatst",	NULL,		  0,		        0,             1,			      -1 },
 	{ NULL,		      "spterm",		NULL,		    SPTAG(0),		  0,             1,			      -1 },
+	{ NULL,		      "spnotes",	NULL,		    SPTAG(1),		  0,             1,			      -1 },
 	{ NULL,		      "spmp",		  NULL,		    SPTAG(2),		  0,             1,			      -1 },
 	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
 	//{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
@@ -100,6 +102,7 @@ static const char *pbrowsercmd[] = { "firefox", "-private-window", NULL};
 static const char *dawcmd[] = { "reaper", "PIPEWIRE_LATENCY=128/48000", NULL };
 static const char *scrotcmd[] = { "flameshot", "gui", NULL};
 static const char *powercmd[] = { "dmenu-power", NULL};
+static const char *notescmd[] = { "st", "-n", "note","-g", "85x23+1753+0", "-e", "zk", "edit", "--interactive", NULL};
 static const char *clipcmd[] = { "clipmenu", NULL};
 
 
@@ -129,8 +132,10 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_u,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
+	{ MODKEY,                       XK_n,      spawn,          {.v = notescmd } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = clipcmd } },
   { MODKEY,                     	XK_Return, togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			      XK_o,	     togglescratch,  {.ui = 1 } },
+//	{ MODKEY,            			      XK_n,	     togglescratch,  {.ui = 1 } },
 	{ MODKEY,            			      XK_m,	     togglescratch,  {.ui = 2 } },
 /* ### MEDIA KEYS ### */
 	/* modifier                     key        function        argument */
