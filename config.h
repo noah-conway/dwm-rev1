@@ -33,12 +33,12 @@ typedef struct {
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd3[] = {"st", "-n", "spmp", "-g", "144x41", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spranger",    spcmd2},
-	{"keepassxc",   spcmd3},
+	{"spmp",        spcmd3},
 };
 
 /* tagging */
@@ -55,8 +55,10 @@ static const Rule rules[] = {
 	{ "Gimp",	      NULL,			  NULL,		    0,            0,				     1,			      -1 },
 	{ "REAPER",     NULL,       NULL,       1,            1,             0,           -1 },
 	{ "firefox",    NULL,			  NULL,		    1 << 3,			  1,             0,			      -1 },
-	{ NULL,		      "floatst",		NULL,		  0,		        0,             1,			      -1 },
+	{ "Anki",       NULL,		  	"Add",		  0,    			  0,             1,			      -1 },
+	{ NULL,		      "floatst",	NULL,		  0,		        0,             1,			      -1 },
 	{ NULL,		      "spterm",		NULL,		    SPTAG(0),		  0,             1,			      -1 },
+	{ NULL,		      "spmp",		  NULL,		    SPTAG(2),		  0,             1,			      -1 },
 	//{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
 	//{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
 };
@@ -128,8 +130,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = browsercmd } },
   { MODKEY,                     	XK_Return, togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			      XK_p,	     togglescratch,  {.ui = 1 } },
-	{ MODKEY,            			      XK_o,	     togglescratch,  {.ui = 2 } },
+	{ MODKEY,            			      XK_o,	     togglescratch,  {.ui = 1 } },
+	{ MODKEY,            			      XK_m,	     togglescratch,  {.ui = 2 } },
 /* ### MEDIA KEYS ### */
 	/* modifier                     key        function        argument */
 //  { 0,                            XF86XK_AudioPlay,             spawn,          {.v = mpdtogglecmd } },
@@ -150,9 +152,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Tab,    zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_1,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY,                       XK_2,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_3,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
